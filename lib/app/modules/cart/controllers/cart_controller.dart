@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:blackford/api_key.dart';
+import 'package:blackford/app/models/cartmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wp_woocommerce/models/cart.dart';
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartController extends GetxController {
   var cartItems = <WooCartItems>[].obs; // Observing cart items
@@ -16,20 +20,48 @@ class CartController extends GetxController {
     super.onInit();
   }
 
+
+ getTokenFromSharedPreferences() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('token');
+}
+
+
   // Fetch cart items
-  Future<void> fetchCartItems() async {
-    try {
-      isLoading.value = true;
-      var cart = await woocommerce.getMyCart(
-      );
-      cartItems.value = cart.items!;
-     totalPrice.value = double.tryParse(cart.totals!.lineTotal ?? '0') ?? 1.0;
-    } catch (e) {
-      print("Error fetching cart items: $e");
-    } finally {
-      isLoading.value = false;
+ Future<void> fetchCartItems() async {
+  try {
+    isLoading.value = true;
+    final String token = await getTokenFromSharedPreferences();
+    final response = await http.get(
+      Uri.parse('${woocommerce.baseUrl}/wp-json/wc/store/cart/items'),
+      headers: {'Authorization': 'Bearer ${token}'},
+      
+    );
+    
+    if (response.statusCode == 200) {
+      // Parse the response body as a List
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
+
+      // Map the List into WooCartItems
+      cartItems.value = jsonResponse
+          .map((item) => WooCartItems.fromJson(item as Map<String, dynamic>))
+          .toList();
+
+      // Calculate the total price manually since it's a flat list
+      totalPrice.value = cartItems.fold(
+          0.0,
+          (sum, item) =>
+              sum + (item.linePrice ?? 0)); // Use linePrice for totals
+    } else {
+      print("Error fetching cart items: ${response.body}");
     }
+  } catch (e) {
+    print(woocommerce.authToken);
+    print("Error fetching cart items: $e");
+  } finally {
+    isLoading.value = false;
   }
+}
 
   // Add product to cart
   Future<void> addToCart(String productId) async {

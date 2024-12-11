@@ -189,6 +189,29 @@ class CheckoutView extends GetView<CheckoutController> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        controller.createOrder();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.yellowish,
+                        minimumSize: Size(double.infinity, 50),
+                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),),
+                        child: Text(
+                          'PLACE ORDER',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 1.5,
+                          ),),
+                    ),
+                  ),
                 ],
               ),
             ),

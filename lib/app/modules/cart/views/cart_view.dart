@@ -31,11 +31,8 @@ class CartView extends GetView<CartController> {
                 itemCount: controller.cartItems.length,
                 itemBuilder: (context, index) {
                   var item = controller.cartItems[index];
-                  // calculate the total price manually from items(quantity will be 1 for every item)
-                  var totalPrice = double.parse(item.lineTotal!) / 100;
-                  print("Total Price: $totalPrice");                 
-                  totalprice += totalPrice.toInt() * controller.cartItems.length;//+
-                  print("Total Price: $totalprice");
+                  var totalPrice = double.parse(item.price.toString()) / 100;
+                  
                   return Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: Row(
@@ -80,13 +77,9 @@ class CartView extends GetView<CartController> {
                               ),
                               SizedBox(height: 8),
                               Text(
-                                item.lineTotal != null
-                                    ? "\$${(double.parse(item.lineTotal!) / 100).toStringAsFixed(2)}"
-                                    : "Price not available",
+                                "\$${totalPrice.toStringAsFixed(2) ?? '0.00'}",
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
+                                    fontWeight: FontWeight.bold, fontSize: 15),
                               ),
                               SizedBox(height: 12),
                             ],
@@ -118,7 +111,7 @@ class CartView extends GetView<CartController> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "\$${totalprice}",
+                   "\$${controller.totalPrice.value / 100}",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
@@ -156,4 +149,3 @@ class CartView extends GetView<CartController> {
     );
   }
 }
-
