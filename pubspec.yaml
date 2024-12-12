@@ -43,6 +43,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_wp_woocommerce: ^1.0.0
   html:
+  flutter_stripe: ^11.3.0
+  
   
 dev_dependencies:
   flutter_test:

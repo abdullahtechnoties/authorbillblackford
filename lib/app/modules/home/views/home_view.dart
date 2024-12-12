@@ -1,4 +1,5 @@
 import 'package:blackford/app/modules/cart/controllers/cart_controller.dart';
+import 'package:blackford/app/modules/checkout/controllers/checkout_controller.dart';
 import 'package:blackford/app/modules/home/views/product.dart';
 import 'package:blackford/utilities/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart' as cs;
@@ -11,6 +12,9 @@ class HomeView extends GetView<HomeController> {
 
   final HomeController homeController = Get.put(HomeController());
   final CartController cart = Get.put(CartController());
+  final CheckoutController checkout = Get.put(CheckoutController());
+
+
   final items = [
     "assets/images/banner.png",
     "assets/images/banner.png",
