@@ -66,6 +66,11 @@ class CheckoutController extends GetxController {
             ),
           ],
           customerId: homeController['id'],
+           metaData: [
+             WooOrderPayloadMetaData(
+               key: '_stripe_client_secret',
+             ),          
+    ],
         ),
       );
 
