@@ -90,33 +90,33 @@ class AccountView extends GetView<AccountController> {
                     ],
                   ),
                 ),
-                SizedBox(height: 8),
-                Divider(color: AppColor.white),
-                  GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/my-orders');
-                  },
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.history,
-                        color: AppColor.white,
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        'My Orders',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
-                      ),
-                      Spacer(),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 18,
-                        color: AppColor.white,
-                      ),
-                    ],
-                  ),
-                ),
+                // SizedBox(height: 8),
+                // Divider(color: AppColor.white),
+                //   GestureDetector(
+                //   onTap: () {
+                //     Get.toNamed('/my-orders');
+                //   },
+                //   child: Row(
+                //     children: [
+                //       Icon(
+                //         Icons.history,
+                //         color: AppColor.white,
+                //       ),
+                //       SizedBox(width: 10),
+                //       Text(
+                //         'My Orders',
+                //         style: TextStyle(
+                //             fontSize: 16, fontWeight: FontWeight.w700),
+                //       ),
+                //       Spacer(),
+                //       Icon(
+                //         Icons.arrow_forward_ios,
+                //         size: 18,
+                //         color: AppColor.white,
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(height: 8),
                 Divider(color: AppColor.white),
                 GestureDetector(

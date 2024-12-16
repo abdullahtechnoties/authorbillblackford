@@ -64,6 +64,7 @@ class _SearchProductViewstate extends State<SearchProductView> {
             fontSize: 16,
           ),
         ),
+        centerTitle: true,
         backgroundColor: AppColor.darkskyblue,
         foregroundColor: AppColor.white,
       ),
@@ -138,10 +139,10 @@ class _SearchProductViewstate extends State<SearchProductView> {
                           height: 120,
                           child: productCard(
                             name: product.name ?? "Unknown",  // Handle null
-                            author: product.name ?? "Unknown",  // Handle null
+                            author: "Bill Blackford",  // Handle null
                             price: product.price ?? "0.0",  // Handle null
                             image: imageUrl,
-                            tags: product.tags.map((tag) => tag.name ?? "").toList() ?? [],  // Safely handle tags
+                            tags: product.tags.map((tag) => tag.name ?? "").toList(),  // Safely handle tags
                             context: context,
                             index: index,
                           ),

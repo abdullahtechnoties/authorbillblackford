@@ -27,80 +27,102 @@ class CartView extends GetView<CartController> {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: controller.cartItems.length,
-                itemBuilder: (context, index) {
-                  var item = controller.cartItems[index];
-                  var totalPrice = double.parse(item.price.toString()) / 100;
-                  
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(width: 5),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Container(
-                            height: 120,
-                            width: 80,
-                            child: Image.network(
-                              item.images?.first.src ?? '',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: Get.width * 0.5,
-                                child: Text(
-                                  item.name ?? '',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                child: Obx(() {
+
+                  if (controller.cartItems.isEmpty) {
+                    return Center(
+                      child: Text("Your cart is empty"),
+                    );
+                  }
+
+                      return ListView.builder(
+                        itemCount: controller.cartItems.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          var item = controller.cartItems[index];
+                          var totalPrice =
+                              double.parse(item.price.toString()) / 100;
+
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(width: 5),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Container(
+                                    height: 120,
+                                    width: 80,
+                                    child: Image.network(
+                                      item.images?.first.src ?? '',
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                  softWrap: true,
-                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ),
-                              SizedBox(height: 2),
-                              Text(
-                                "author",
-                                style: TextStyle(
-                                  color: AppColor.white,
-                                  fontSize: 12,
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: Get.width * 0.5,
+                                        child: Text(
+                                          item.name ?? '',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        "author",
+                                        style: TextStyle(
+                                          color: AppColor.white,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "\$${totalPrice.toStringAsFixed(2) ?? '0.00'}",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15),
+                                      ),
+                                      SizedBox(height: 12),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                "\$${totalPrice.toStringAsFixed(2) ?? '0.00'}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 15),
-                              ),
-                              SizedBox(height: 12),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            CupertinoIcons.delete,
-                            color: AppColor.white,
-                            size: 20,
-                          ),
-                          onPressed: () {
-                            controller.removeFromCart(item.key!);
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+                                Obx(
+                                  () =>
+                                  controller.isLoading.value ? SizedBox(
+                                     width: 25,
+                                     height: 25,                                    
+                                    child: CircularProgressIndicator(
+                                      color: AppColor.yellowish,
+                                      strokeWidth: 0.5,
+                                    ),
+                                  ) : IconButton(
+                                    icon: Icon(
+                                      CupertinoIcons.delete,
+                                      color: AppColor.white,
+                                      size: 20,
+                                    ),
+                                    onPressed: () {
+                                      controller.removeFromCart(item.key!);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    })),
             SizedBox(height: 10),
             Divider(height: 20, thickness: 1, color: AppColor.white),
             Row(
@@ -110,12 +132,14 @@ class CartView extends GetView<CartController> {
                   "Total Payment",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                 ),
-                Text(
-                   "\$${controller.totalPrice.value / 100}",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900,
-                    color: AppColor.yellowish,
+                Obx(
+                  () => Text(
+                    "\$${controller.totalPrice.value / 100}",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                      color: AppColor.yellowish,
+                    ),
                   ),
                 ),
               ],
@@ -123,6 +147,9 @@ class CartView extends GetView<CartController> {
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
+                if (controller.cartItems.isEmpty) {
+                  return;
+                }
                 Get.toNamed('/checkout');
               },
               child: Text(

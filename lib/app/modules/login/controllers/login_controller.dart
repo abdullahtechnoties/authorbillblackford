@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:blackford/api_key.dart';
+import 'package:blackford/utilities/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wp_woocommerce/woocommerce.dart';
 import 'package:get/get.dart';
@@ -44,7 +45,7 @@ class LoginController extends GetxController {
         saveTokenToSharedPreferences(token);
         print("Access Token: $token");
       } else {
-        Get.snackbar("Error", "JWT login failed. Trying customer login...", backgroundColor: Colors.orange);
+        Get.snackbar("Error", "JWT login failed. Trying customer login...", backgroundColor:  AppColor.yellowish, colorText: Colors.white);
       }
       final customer = await woocommerce.loginCustomer(
         username: email.value.text, 
@@ -53,12 +54,12 @@ class LoginController extends GetxController {
       
       if (customer != null) {
         saveDataToSharedPreferences(customer);
-        Get.snackbar("Login Successful", "Welcome back, ${customer.username}!", backgroundColor: Colors.green, colorText: Colors.white);
+        Get.snackbar("Login Successful", "Welcome back, ${customer.username}!", backgroundColor: AppColor.yellowish, colorText: Colors.white);
         print("Logged in User: ${customer.username}");
         
         Get.offAllNamed('/bottom-nav'); 
       } else {
-        Get.snackbar("Error", "Invalid credentials. Please try again.", backgroundColor: Colors.red, colorText: Colors.white);
+        Get.snackbar("Error", "Invalid credentials. Please try again.", backgroundColor: AppColor.yellowish, colorText: Colors.white);
       }
     }  catch (e) {
       String errorMessage = "An error occurred. Please try again later.";
@@ -80,7 +81,7 @@ class LoginController extends GetxController {
       } else {
         errorMessage = "Unexpected error: ${e.toString()}";
       }
-      Get.snackbar("Error", errorMessage, backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar("Error", errorMessage, backgroundColor: AppColor.yellowish, colorText: Colors.white);
       print("Error logging in: $e");
     }
     finally {

@@ -1,9 +1,11 @@
+import 'package:blackford/app/modules/bottom_nav/controllers/bottom_nav_controller.dart';
 import 'package:blackford/app/modules/cart/controllers/cart_controller.dart';
 import 'package:blackford/app/modules/checkout/controllers/checkout_controller.dart';
 import 'package:blackford/app/modules/home/views/product.dart';
 import 'package:blackford/utilities/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart' as cs;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
@@ -11,8 +13,8 @@ class HomeView extends GetView<HomeController> {
   HomeView({super.key});
 
   final HomeController homeController = Get.put(HomeController());
+  final BottomNavController bottomNavController = Get.put(BottomNavController());
   final CartController cart = Get.put(CartController());
-  final CheckoutController checkout = Get.put(CheckoutController());
 
 
   final items = [
@@ -34,11 +36,12 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           centerTitle: true,
+          surfaceTintColor: Colors.transparent,
           backgroundColor: AppColor.darkskyblue,
           foregroundColor: AppColor.white,
           leading: GestureDetector(
-            onTap: () async {
-              await controller.getProducts();
+            onTap: () {
+              bottomNavController.tabIndex.value = 1;
             },
             child: const Icon(Icons.search)),
           actions: [
@@ -132,7 +135,12 @@ class HomeView extends GetView<HomeController> {
                             children: [
                               Product(),
                               Product(),
-                              Product(),
+                              // Product(),
+                              Container(
+                                child: Center(
+                                  child: Text("Coming Soon"),
+                                ),
+                              ),
                             ],
                           ),
                         ),

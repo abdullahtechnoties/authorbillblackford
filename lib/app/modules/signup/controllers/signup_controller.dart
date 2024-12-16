@@ -1,4 +1,5 @@
 import 'package:blackford/api_key.dart';
+import 'package:blackford/utilities/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wp_woocommerce/models/customer.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ void createCustomer() async {
 
     try {
       final result = await woocommerce.createCustomer(user!);
-      Get.snackbar("Account Created", "Proceed to Login", backgroundColor: Colors.green, colorText: Colors.white);
+      Get.snackbar("Account Created", "Proceed to Login", backgroundColor:  AppColor.yellowish, colorText: Colors.white);
       print("Retrieved Data: $result");
       Get.toNamed('/login');
       // Reset input fields and stop loader
@@ -56,7 +57,7 @@ void createCustomer() async {
       } else {
         errorMessage = "Unexpected error: ${e.toString()}";
       }
-      Get.snackbar("Error", errorMessage, backgroundColor: Colors.red, duration: const Duration(seconds: 5),colorText: Colors.white);
+      Get.snackbar("Error", errorMessage, backgroundColor: AppColor.yellowish, duration: const Duration(seconds: 5),colorText: Colors.white);
       print("Error creating customer: $e");
     }
     finally {

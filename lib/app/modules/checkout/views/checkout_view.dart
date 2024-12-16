@@ -1,3 +1,4 @@
+import 'package:blackford/app/modules/cart/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../utilities/colors.dart';
@@ -36,8 +37,9 @@ class CheckoutView extends GetView<CheckoutController> {
             ),
             SizedBox(height: 15),
             TextFormField(
+             controller: controller.nameController,
               decoration: InputDecoration(
-                labelText: "First Name",
+                labelText: "Name",
                 labelStyle: TextStyle(
                   color: Color(0xFFB8B8B8),
                 ),
@@ -56,30 +58,10 @@ class CheckoutView extends GetView<CheckoutController> {
               ),
               keyboardType: TextInputType.emailAddress,
             ),
+           
             SizedBox(height: 15),
             TextFormField(
-              decoration: InputDecoration(
-                labelText: "Last Name",
-                labelStyle: TextStyle(
-                  color: Color(0xFFB8B8B8),
-                ),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 16, horizontal: 15),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-              ),
-              style: TextStyle(
-                color: AppColor.darkskyblue,
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 15),
-            TextFormField(
+             controller: controller.emailController,
               decoration: InputDecoration(
                 labelText: "Your Email",
                 labelStyle: TextStyle(
@@ -139,38 +121,31 @@ class CheckoutView extends GetView<CheckoutController> {
                       ),
                     ),
                   ),
-                  ListTile(
-                    title: Text(
-                      'Book × 2',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount:  Get.find<CartController>().cartItems.length,
+                    itemBuilder: (context, index ) {
+                    final cartItem =  Get.find<CartController>().cartItems[index];
+                    var totalPrice =
+                              double.parse(cartItem.price.toString()) / 100;
+                    return ListTile(
+                      title: Text(
+                        cartItem.name.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    trailing: Text(
-                      '\$88.00',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: AppColor.brown,
-                        fontWeight: FontWeight.bold,
+                      trailing: Text(
+                         "\$${totalPrice.toStringAsFixed(2) ?? '0.00'}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColor.brown,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      'Book × 2',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    trailing: Text(
-                      '\$88.00',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: AppColor.brown,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                    );
+                  },),
+                 
                   Divider(),
                   ListTile(
                     title: Text(
@@ -182,34 +157,40 @@ class CheckoutView extends GetView<CheckoutController> {
                       ),
                     ),
                     trailing: Text(
-                      '\$88.00',
+                    "\$${Get.find<CartController>().totalPrice.value / 100}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        controller.createOrder();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.yellowish,
-                        minimumSize: Size(double.infinity, 50),
-                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),),
-                        child: Text(
-                          'PLACE ORDER',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            letterSpacing: 1.5,
+                  Obx(
+                    () => Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+                      child: ElevatedButton(
+                        onPressed: controller.isLoading.value ? null : () {
+                          controller.createOrder();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.yellowish,
+                          minimumSize: Size(double.infinity, 50),
+                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),),
+                          child: controller.isLoading.value
+                          ? CircularProgressIndicator(
+                            color: Colors.white,  
+                          ):
+                           Text(
+                            'PLACE ORDER',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              letterSpacing: 1.5,
+                            ),),
+                      ),
                     ),
                   ),
                 ],

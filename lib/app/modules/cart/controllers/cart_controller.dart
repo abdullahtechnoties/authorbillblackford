@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:blackford/api_key.dart';
 import 'package:blackford/app/models/cartmodel.dart';
+import 'package:blackford/utilities/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -11,7 +12,7 @@ class CartController extends GetxController {
   var cartItems = <WooCartItems>[].obs; // Observing cart items
   var totalPrice = 0.0.obs; // Observing total price
   var isLoading = false.obs; // For showing loading indicators
-
+   RxBool loader = false.obs;
 
 
   @override
@@ -26,6 +27,10 @@ class CartController extends GetxController {
   return prefs.getString('token');
 }
 
+
+//clear cart
+
+  // Add product to cart
 
   // Fetch cart items
  Future<void> fetchCartItems() async {
@@ -67,14 +72,21 @@ class CartController extends GetxController {
   Future<void> addToCart(String productId) async {
     try {
       isLoading.value = true;
+      loader.value = true;
+      if (cartItems.any((item) => item.id == int.parse(productId))) {
+        Get.snackbar("Sorry", "You can't add the same product twice.", 
+        backgroundColor: AppColor.yellowish, colorText: Colors.white);
+        return;
+      }
       await woocommerce.addToMyCart(itemId: productId.toString(), quantity: '1');
       await fetchCartItems(); 
       Get.snackbar("Added to Cart", "Product added to cart successfully.", 
-      backgroundColor: Colors.green, colorText: Colors.white);
+      backgroundColor: AppColor.yellowish, colorText: Colors.white);
     } catch (e) {
       print("Error adding to cart: $e");
     } finally {
       isLoading.value = false;
+      loader.value = false;
     }
   }
 

@@ -44,6 +44,7 @@ dependencies:
   flutter_wp_woocommerce: ^1.0.0
   html:
   flutter_stripe: ^11.3.0
+  flutter_html:
   
   
 dev_dependencies:

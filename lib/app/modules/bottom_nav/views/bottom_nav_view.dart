@@ -5,6 +5,7 @@ import 'package:blackford/app/modules/home/views/home_view.dart';
 import 'package:blackford/app/modules/search_product/views/search_product_view.dart';
 import 'package:blackford/utilities/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class BottomNavView extends GetView<BottomNavController> {
@@ -88,8 +89,14 @@ class BottomNavView extends GetView<BottomNavController> {
   Widget build(BuildContext context) {
     // final LandingPageController landingPageController =
     //     Get.put(LandingPageController(), permanent: false);
+     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColor.darkskyblue,
+      statusBarBrightness: Brightness.dark,
+    ));
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColor.primarycolor,
+        
         bottomNavigationBar: buildBottomNavigationMenu(context, controller),
         body: Obx(
           () => IndexedStack(

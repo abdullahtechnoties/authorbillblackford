@@ -2,7 +2,6 @@ import 'package:blackford/app/modules/home/controllers/home_controller.dart';
 import 'package:blackford/utilities/colors.dart';
 import 'package:blackford/widgets/product_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wp_woocommerce/models/products.dart';
 import 'package:get/get.dart';
 
 class Product extends GetView<HomeController> {
@@ -17,9 +16,10 @@ class Product extends GetView<HomeController> {
         child: Obx(() {
           // Ensure the products list is loaded and not empty
           if (controller.allproducts.isEmpty) {
-            return Center(child: CircularProgressIndicator());
-          }
-          
+            return Center(child: CircularProgressIndicator(
+              color: AppColor.yellowish,
+            ));
+          }    
           return ListView.builder(
             padding: EdgeInsets.only(top: 20,),
             shrinkWrap: true,
@@ -41,10 +41,10 @@ class Product extends GetView<HomeController> {
                     height: 120,
                     child: productCard(
                       name: product.name ?? "Unknown",  // Handle null values
-                      author: product.name ?? "Unknown",  // Handle null values
+                      author: 'Bill Blackford',  // Handle null values
                       price: product.price ?? "0.0",  // Handle null values
                       image: imageUrl,
-                      tags: product.tags.map((tag) => tag.name ?? "").toList() ?? [],  // Safely handle null tags
+                      tags: product.tags.map((tag) => tag.name ?? "").toList(),  // Safely handle null tags
                       context: context,
                       index: index,
                     ),

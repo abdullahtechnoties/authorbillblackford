@@ -1,5 +1,6 @@
 import 'package:blackford/app/modules/cart/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_wp_woocommerce/models/products.dart';
 import 'package:get/get.dart';
 import '../../../../utilities/colors.dart';
@@ -10,10 +11,10 @@ class SingleProductView extends GetView<SingleProductController> {
 
   @override
   Widget build(BuildContext context) {
-    final WooProduct? product = Get.arguments;  
+    final WooProduct? product = Get.arguments;
     return Scaffold(
-      backgroundColor: Color(0xFFB5D1DA),
-      body:DraggableScrollableSheet(
+        backgroundColor: Color(0xFFB5D1DA),
+        body: DraggableScrollableSheet(
           initialChildSize: 0.9,
           minChildSize: 0.9,
           maxChildSize: 0.9,
@@ -63,8 +64,12 @@ class SingleProductView extends GetView<SingleProductController> {
                           children: [
                             Align(
                               alignment: Alignment.center,
-                              child: Image.network(product?.images.first.src ?? '',
-                                  height: 250, width: MediaQuery.of(context).size.width * 0.6, fit: BoxFit.contain),
+                              child: Image.network(
+                                  product?.images.first.src ?? '',
+                                  height: 250,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
+                                  fit: BoxFit.contain),
                             ),
                             SizedBox(height: 20),
                             Text(
@@ -76,16 +81,21 @@ class SingleProductView extends GetView<SingleProductController> {
                               ),
                             ),
                             SizedBox(height: 10),
-                            Text(
-                              product?.description ?? "No description available",
-                              style: TextStyle(fontSize: 15, color: Colors.white),
-                              maxLines: 5,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            Html(
+                                data: product?.description ??
+                                    "No description available",
+                                style: {
+                                  "body": Style(
+                                    color: AppColor.white,
+                                    fontSize: FontSize(14),
+                                    fontWeight: FontWeight.w400,
+                                  )
+                                }),
                             SizedBox(height: 20),
                             // You can add tags and other information here
                             SizedBox(
-                              width: 200,
+                              width: 100,
+                              height: 25,
                               child: Container(
                                 margin: EdgeInsets.only(right: 8),
                                 alignment: Alignment.center,
@@ -131,7 +141,8 @@ class SingleProductView extends GetView<SingleProductController> {
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: AppColor.yellowish,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(50),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                         ),
                                       ),
                                     ),
@@ -139,30 +150,90 @@ class SingleProductView extends GetView<SingleProductController> {
                                 ),
                                 SizedBox(width: 10),
                                 Expanded(
-                                  child: SizedBox(
-                                    height: 50,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Get.find<CartController>().addToCart(product!.id.toString());
-                                        // Get.find().CartController.addToCart(product!.id);
-                                      },
-                                      child: Text(
-                                        "Add to Cart",
-                                        style: TextStyle(
-                                          color: AppColor.darkskyblue,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
-                                          letterSpacing: 0.3,
+                                  child: Obx(() => SizedBox(
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: Get.find<CartController>()
+                                                  .loader
+                                                  .value
+                                              ? null // Disable button when loading
+                                              : () {
+                                                  Get.find<CartController>()
+                                                      .addToCart(product!.id
+                                                          .toString());
+                                                },
+                                          style: ButtonStyle(
+                                            shape: WidgetStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                              ),
+                                            ),
+                                            backgroundColor: WidgetStateProperty
+                                                .resolveWith<Color>(
+                                              (Set<WidgetState> states) {
+                                                if (states.contains(
+                                                    WidgetState.disabled)) {
+                                                  return const Color.fromARGB(
+                                                      255, 150, 150, 150);
+                                                }
+                                                return const Color.fromARGB(
+                                                    255,
+                                                    231,
+                                                    231,
+                                                    231); // Enabled button color
+                                              },
+                                            ),
+                                            foregroundColor:
+                                                WidgetStateProperty.all(
+                                                    Colors.white),
+                                          ),
+                                          child: Get.find<CartController>()
+                                                  .loader
+                                                  .value
+                                              ? const SizedBox(
+                                                  height: 10,
+                                                  width: 10,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    strokeWidth: 0.5,
+                                                    color: Colors.black,
+                                                  ),
+                                                )
+                                              : const Text(
+                                                  'Add to Cart',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: AppColor.darkskyblue,
+                                                  ),
+                                                ),
                                         ),
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: AppColor.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                      )),
+                                  // child: SizedBox(
+                                  //   height: 50,
+                                  //   child: ElevatedButton(
+                                  //     onPressed: () {
+                                  //       Get.find<CartController>().addToCart(product!.id.toString());
+                                  //       // Get.find().CartController.addToCart(product!.id);
+                                  //     },
+                                  //     child: Text(
+                                  //       "Add to Cart",
+                                  //       style: TextStyle(
+                                  //         color: AppColor.darkskyblue,
+                                  //         fontSize: 13,
+                                  //         fontWeight: FontWeight.w600,
+                                  //         letterSpacing: 0.3,
+                                  //       ),
+                                  //     ),
+                                  //     style: ElevatedButton.styleFrom(
+                                  //       backgroundColor: AppColor.white,
+                                  //       shape: RoundedRectangleBorder(
+                                  //         borderRadius: BorderRadius.circular(50),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ),
                               ],
                             ),
@@ -176,8 +247,6 @@ class SingleProductView extends GetView<SingleProductController> {
               ),
             );
           },
-        )
-      
-    );
+        ));
   }
 }
