@@ -10,8 +10,8 @@ void main() async {
    WidgetsFlutterBinding.ensureInitialized();
     try {
     // Initialize Stripe
-    Stripe.publishableKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
-    await Stripe.instance.applySettings();
+    // Stripe.publishableKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+    // await Stripe.instance.applySettings();
 
     // Retrieve shared preferences
     SharedPreferences prefs = await SharedPreferences.getInstance();

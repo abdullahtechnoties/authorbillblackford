@@ -45,6 +45,7 @@ Future<void> getProducts() async {
   try {
     final products = await woocommerce.getProducts(perPage: 20);  
     allproducts.value = products;
+    // ignore: invalid_use_of_protected_member
     print("Fetched Products: ${allproducts.value.toString()}");
 
     

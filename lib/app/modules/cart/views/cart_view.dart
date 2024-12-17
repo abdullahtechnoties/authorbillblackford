@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 class CartView extends GetView<CartController> {
   @override
   Widget build(BuildContext context) {
-    int totalprice = 0;
     return Scaffold(
       backgroundColor: AppColor.primarycolor,
       appBar: AppBar(
@@ -88,7 +87,7 @@ class CartView extends GetView<CartController> {
                                       ),
                                       SizedBox(height: 8),
                                       Text(
-                                        "\$${totalPrice.toStringAsFixed(2) ?? '0.00'}",
+                                        "\$${totalPrice.toStringAsFixed(2)}",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15),

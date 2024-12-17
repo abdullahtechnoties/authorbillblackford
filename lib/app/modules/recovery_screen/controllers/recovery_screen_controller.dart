@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class RecoveryScreenController extends GetxController {
-  //TODO: Implement RecoveryScreenController
+ 
 
   final count = 0.obs;
   @override

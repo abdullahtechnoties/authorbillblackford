@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: deprecated_member_use
 class OnboardingController extends GetxController
+    // ignore: deprecated_member_use
     with SingleGetTickerProviderMixin {
   late TabController tabController;
   RxInt currentIndex = 0.obs; // Observable variable to track the current index

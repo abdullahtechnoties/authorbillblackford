@@ -1,11 +1,9 @@
 import 'package:blackford/app/modules/bottom_nav/controllers/bottom_nav_controller.dart';
 import 'package:blackford/app/modules/cart/controllers/cart_controller.dart';
-import 'package:blackford/app/modules/checkout/controllers/checkout_controller.dart';
 import 'package:blackford/app/modules/home/views/product.dart';
 import 'package:blackford/utilities/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart' as cs;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 

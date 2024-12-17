@@ -136,7 +136,7 @@ class CheckoutView extends GetView<CheckoutController> {
                         ),
                       ),
                       trailing: Text(
-                         "\$${totalPrice.toStringAsFixed(2) ?? '0.00'}",
+                         "\$${totalPrice.toStringAsFixed(2)}",
                         style: TextStyle(
                           fontSize: 14,
                           color: AppColor.brown,

@@ -1,23 +1,24 @@
+import 'package:blackford/api_key.dart';
+import 'package:flutter_wp_woocommerce/models/order.dart';
+
 import 'package:get/get.dart';
 
 class MyOrdersController extends GetxController {
-  //TODO: Implement MyOrdersController
+  final RxList<WooOrder> allorders = <WooOrder>[].obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    getOrders();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> getOrders() async {
+      try {
+        final orders = await woocommerce.getOrders(perPage: 20);  
+        allorders.value = orders;
+        print("Fetched ${allorders.toString()} orders");
+      } catch (e) {
+        print("Error fetching orders: $e");
+      }
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

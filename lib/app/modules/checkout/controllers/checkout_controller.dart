@@ -163,6 +163,7 @@ class CheckoutController extends GetxController {
     }
   }
 
+// ignore: unused_element
 Future<void> _startStripePayment(WooOrder orderResponse) async {
   try {
     // Assuming WooOrder has an `id` property
@@ -225,6 +226,7 @@ Future<void> _startStripePayment(WooOrder orderResponse) async {
   }
 
   // Update WooCommerce order status
+  // ignore: unused_element
   Future<void> _updateOrderStatus(int orderId, String status) async {
     final url = 'https://authorbillblackford.com/wp-json/wc/v3/orders/$orderId';
     final response = await http.put(

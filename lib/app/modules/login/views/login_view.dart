@@ -252,75 +252,75 @@ class LoginView extends GetView<LoginController> {
                           ],
                         ),
                         SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                color: AppColor.white,
-                                thickness: 1,
-                                endIndent: 15,
-                              ),
-                            ),
-                            Text(
-                              " Or with ",
-                              style: TextStyle(
-                                color: AppColor.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                color: AppColor.white,
-                                thickness: 1,
-                                indent: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 40),
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Image.asset(
-                            './assets/images/google-icon.png',
-                            height: 25,
-                            width: 25,
-                          ),
-                          label: Text(
-                            " Sign in with Google",
-                            style: TextStyle(color: AppColor.white),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size.fromHeight(60),
-                            backgroundColor: AppColor.primarycolor,
-                            side: BorderSide(color: AppColor.white),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Image.asset(
-                            'assets/images/apple-icon.png',
-                            height: 25,
-                            width: 25,
-                          ),
-                          label: Text(
-                            " Sign in with Apple",
-                            style: TextStyle(color: AppColor.white),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size.fromHeight(60),
-                            backgroundColor: AppColor.primarycolor,
-                            side: BorderSide(color: AppColor.white),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       child: Divider(
+                        //         color: AppColor.white,
+                        //         thickness: 1,
+                        //         endIndent: 15,
+                        //       ),
+                        //     ),
+                        //     Text(
+                        //       " Or with ",
+                        //       style: TextStyle(
+                        //         color: AppColor.white,
+                        //         fontSize: 16,
+                        //         fontWeight: FontWeight.w400,
+                        //       ),
+                        //     ),
+                        //     Expanded(
+                        //       child: Divider(
+                        //         color: AppColor.white,
+                        //         thickness: 1,
+                        //         indent: 15,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(height: 40),
+                        // ElevatedButton.icon(
+                        //   onPressed: () {},
+                        //   icon: Image.asset(
+                        //     './assets/images/google-icon.png',
+                        //     height: 25,
+                        //     width: 25,
+                        //   ),
+                        //   label: Text(
+                        //     " Sign in with Google",
+                        //     style: TextStyle(color: AppColor.white),
+                        //   ),
+                        //   style: ElevatedButton.styleFrom(
+                        //     minimumSize: Size.fromHeight(60),
+                        //     backgroundColor: AppColor.primarycolor,
+                        //     side: BorderSide(color: AppColor.white),
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(50),
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(height: 15),
+                        // ElevatedButton.icon(
+                        //   onPressed: () {},
+                        //   icon: Image.asset(
+                        //     'assets/images/apple-icon.png',
+                        //     height: 25,
+                        //     width: 25,
+                        //   ),
+                        //   label: Text(
+                        //     " Sign in with Apple",
+                        //     style: TextStyle(color: AppColor.white),
+                        //   ),
+                        //   style: ElevatedButton.styleFrom(
+                        //     minimumSize: Size.fromHeight(60),
+                        //     backgroundColor: AppColor.primarycolor,
+                        //     side: BorderSide(color: AppColor.white),
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(50),
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(height: 15),
                       ],
                     ),
                   ),
