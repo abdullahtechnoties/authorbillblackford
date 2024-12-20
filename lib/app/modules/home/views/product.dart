@@ -22,15 +22,15 @@ class Product extends GetView<HomeController> {
           }    
           return ListView.builder(
             padding: EdgeInsets.only(top: 20,),
+            physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             itemCount: controller.allproducts.length,
             itemBuilder: (context, index) {
               final product = controller.allproducts[index];
 
-              // Ensure product has images and handle null/empty
               String imageUrl = '';
               if (product.images.isNotEmpty) {
-                imageUrl = product.images.first.src ?? '';  // Using the first image URL
+                imageUrl = product.images.first.src ?? ''; 
               }
 
               return Padding(
@@ -40,11 +40,11 @@ class Product extends GetView<HomeController> {
                   child: SizedBox(
                     height: 120,
                     child: productCard(
-                      name: product.name ?? "Unknown",  // Handle null values
-                      author: 'Bill Blackford',  // Handle null values
-                      price: product.price ?? "0.0",  // Handle null values
+                      name: product.name ?? "Unknown",  
+                      author: 'Bill Blackford', 
+                      price: product.price ?? "0.0",  
                       image: imageUrl,
-                      tags: product.tags.map((tag) => tag.name ?? "").toList(),  // Safely handle null tags
+                      tags: product.tags.map((tag) => tag.name ?? "").toList(),
                       context: context,
                       index: index,
                     ),

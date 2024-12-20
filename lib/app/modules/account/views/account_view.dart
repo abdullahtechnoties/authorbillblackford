@@ -92,12 +92,14 @@ class AccountView extends GetView<AccountController> {
                 ),
                 SizedBox(height: 8),
                 Divider(color: AppColor.white),
+                SizedBox(height: 8),
                   GestureDetector(
                   onTap: () {
                     Get.toNamed('/my-orders');
                   },
                   child: Row(
                     children: [
+                      
                       Icon(
                         Icons.history,
                         color: AppColor.white,
@@ -119,9 +121,10 @@ class AccountView extends GetView<AccountController> {
                 ),
                 SizedBox(height: 8),
                 Divider(color: AppColor.white),
+                SizedBox(height: 8),
                 GestureDetector(
                   onTap: () {
-                    // Get.toNamed('/checkout');
+                     Get.toNamed('/cart');
                   },
                   child: Row(
                     children: [
@@ -131,7 +134,7 @@ class AccountView extends GetView<AccountController> {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        'Checkout',
+                        'My Cart',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w700),
                       ),

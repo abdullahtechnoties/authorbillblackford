@@ -97,7 +97,7 @@ class HomeView extends GetView<HomeController> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-              child: Column(
+              child: Column(                
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
