@@ -21,7 +21,8 @@ class BottomNavView extends GetView<BottomNavController> {
     return Obx(
       () => MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
-        child: SizedBox(
+        child: Container(
+          color: Colors.red,
           height: 60,
           child: BottomNavigationBar(
             showUnselectedLabels: true,
@@ -73,6 +74,7 @@ class BottomNavView extends GetView<BottomNavController> {
                   child: Icon(
                     Icons.person,
                     size: 20.0,
+                    
                   ),
                 ),
                 label: 'Profile',
@@ -92,11 +94,11 @@ class BottomNavView extends GetView<BottomNavController> {
      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: AppColor.darkskyblue,
       statusBarBrightness: Brightness.dark,
+      systemNavigationBarColor: AppColor.darkskyblue
     ));
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColor.primarycolor,
-        
         bottomNavigationBar: buildBottomNavigationMenu(context, controller),
         body: Obx(
           () => IndexedStack(
