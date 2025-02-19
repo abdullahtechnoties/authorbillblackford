@@ -122,53 +122,61 @@ class CartView extends GetView<CartController> {
                         },
                       );
                     })),
-            SizedBox(height: 10),
-            Divider(height: 20, thickness: 1, color: AppColor.white),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Total Payment",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                ),
-                Obx(
-                  () => Text(
-                    "\$${controller.totalPrice.value / 100}",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      color: AppColor.yellowish,
+
+            Obx(
+              () => controller.cartItems.isEmpty ? Container() : Column(
+                children: [
+                  SizedBox(height: 10),
+                  Divider(height: 20, thickness: 1, color: AppColor.white),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Total Payment",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  Obx(
+                    () => Text(
+                      "\$${controller.totalPrice.value / 100}",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        color: AppColor.yellowish,
+                      ),
                     ),
                   ),
+                ],
+              ),
+              SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: () {
+                  if (controller.cartItems.isEmpty) {
+                    return;
+                  }
+                  Get.toNamed('/checkout');
+                },
+                child: Text(
+                  "Checkout",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.3,
+                  ),
                 ),
-              ],
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                if (controller.cartItems.isEmpty) {
-                  return;
-                }
-                Get.toNamed('/checkout');
-              },
-              child: Text(
-                "Checkout",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.3,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size.fromHeight(60),
+                  backgroundColor: AppColor.yellowish,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size.fromHeight(60),
-                backgroundColor: AppColor.yellowish,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
+              SizedBox(height: 20),
+                ],
               ),
             ),
-            SizedBox(height: 20),
+            
           ],
         ),
       ),

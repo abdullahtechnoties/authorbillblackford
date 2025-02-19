@@ -34,7 +34,37 @@ class MyOrdersView extends GetView<MyOrdersController> {
           ),        
         );       
       }
-
+    if(controller.allorders.isEmpty){
+      return Scaffold(
+        backgroundColor: AppColor.primarycolor,
+        appBar: AppBar(
+          backgroundColor: AppColor.darkskyblue,
+          foregroundColor: AppColor.white,
+          centerTitle: true,
+          title: Text(
+            'My Orders',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: AppColor.white
+            ),
+          )
+          ),
+          body: SizedBox(
+            child: Center(
+              child: Text(
+                'No Orders Found',
+                style: TextStyle(
+                  color: AppColor.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            )
+          )
+        )
+      ;
+    }
     return Scaffold(
       backgroundColor: AppColor.primarycolor,
       appBar: AppBar(
@@ -131,38 +161,38 @@ class MyOrdersView extends GetView<MyOrdersController> {
                          ),
                        ),
                        // Image and Button
-                       Padding(
-                         padding: EdgeInsets.all(16.0),
-                         child: Column(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                            //  Image.network(
-                            //    'assets/images/Logo.png',
-                            //    width: 100,
-                            //    height: 100,
-                            //  ),
-                             SizedBox(height: 8),
-                             ElevatedButton(
-                               onPressed: () {
-                                 Get.toNamed('/single-product');
-                               },
-                               style: ElevatedButton.styleFrom(
-                                 backgroundColor: AppColor.darkskyblue,
-                                 shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(50),
-                                 ),
-                               ),
-                               child: Text(
-                                 "View",
-                                 style: TextStyle(
-                                   color: Colors.white,
-                                   fontWeight: FontWeight.bold,
-                                 ),
-                               ),
-                             ),
-                           ],
-                         ),
-                       ),
+                      //  Padding(
+                      //    padding: EdgeInsets.all(16.0),
+                      //    child: Column(
+                      //      mainAxisAlignment: MainAxisAlignment.center,
+                      //      children: [
+                      //       //  Image.network(
+                      //       //    'assets/images/Logo.png',
+                      //       //    width: 100,
+                      //       //    height: 100,
+                      //       //  ),
+                      //        SizedBox(height: 8),
+                      //        ElevatedButton(
+                      //          onPressed: () {
+                      //            Get.toNamed('/single-product');
+                      //          },
+                      //          style: ElevatedButton.styleFrom(
+                      //            backgroundColor: AppColor.darkskyblue,
+                      //            shape: RoundedRectangleBorder(
+                      //              borderRadius: BorderRadius.circular(50),
+                      //            ),
+                      //          ),
+                      //          child: Text(
+                      //            "View",
+                      //            style: TextStyle(
+                      //              color: Colors.white,
+                      //              fontWeight: FontWeight.bold,
+                      //            ),
+                      //          ),
+                      //        ),
+                      //      ],
+                      //    ),
+                      //  ),
                      ],
                    ),
                  );

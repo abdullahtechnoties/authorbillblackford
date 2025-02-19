@@ -1,5 +1,6 @@
 import 'package:blackford/utilities/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,6 +8,9 @@ import 'app/routes/app_pages.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]
+  );
    WidgetsFlutterBinding.ensureInitialized();
     try {
     // Initialize Stripe

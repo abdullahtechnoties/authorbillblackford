@@ -23,6 +23,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false ,
       child: Scaffold(
         backgroundColor: AppColor.primarycolor,
         appBar: AppBar(
