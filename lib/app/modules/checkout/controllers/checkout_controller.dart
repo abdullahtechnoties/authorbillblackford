@@ -4,7 +4,6 @@ import 'package:blackford/app/modules/cart/controllers/cart_controller.dart';
 import 'package:blackford/app/modules/home/controllers/home_controller.dart';
 import 'package:blackford/utilities/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_wp_woocommerce/models/order_payload.dart';
 import 'package:flutter_wp_woocommerce/woocommerce.dart';
 import 'package:get/get.dart';
@@ -14,6 +13,11 @@ class CheckoutController extends GetxController {
   late dynamic homeController = Get.find<HomeController>().retrievedData ?? {};
   var nameController = TextEditingController();
   var emailController = TextEditingController();
+  var phoneController = TextEditingController();
+  var addressController = TextEditingController();
+  var cityController = TextEditingController();
+  var stateController = TextEditingController();
+  var countryController = TextEditingController();
   RxBool isLoading = false.obs;
   final count = 0.obs;
 
@@ -24,7 +28,7 @@ class CheckoutController extends GetxController {
     
     nameController.text = homeController['username'] ?? '';
     emailController.text = homeController['email'] ?? '';
-    initializeStripe(); // Initialize Stripe during controller initialization
+    
   }
 
   @override
@@ -32,11 +36,7 @@ class CheckoutController extends GetxController {
     super.onReady();
   }
 
-  // Initialize Stripe with your publishable key
-  Future<void> initializeStripe() async {
-    Stripe.publishableKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx'; // Replace with your actual publishable key
-    await Stripe.instance.applySettings();
-  }
+  
 
   Future<void> createOrder() async {
     print("Creating Order");
@@ -55,37 +55,33 @@ class CheckoutController extends GetxController {
 
       final response = await woocommerce.createOrder(
         WooOrderPayload(
-          paymentMethod: 'stripe',
-          paymentMethodTitle: 'Credit Card',
+          paymentMethod: 'cash',
+          paymentMethodTitle: 'Cash on Delivery',
           setPaid: false,
           status: 'processing',
           shipping: WooOrderPayloadShipping(
             firstName: nameController.text,
             lastName: '',
-            address1: '123 Main St',
-            city: 'Anytown',
-            state: 'CA',
+            address1: addressController.text,
+            city: cityController.text,
+            state: stateController.text,
           ),
           billing: WooOrderPayloadBilling(
             firstName: nameController.text,
             lastName: '',
-            address1: '123 Main St',
-            city: 'Anytown',
-            state: 'CA',
-            phone: '123-456-7890',
+            address1: addressController.text,
+            city: cityController.text,
+            state: stateController.text,
+            phone: phoneController.text,
             email: emailController.text,
-            country: 'US',
+            country: countryController.text,
           ),
           lineItems: [
             // add cart items
             ...lineItems
           ],
           customerId: homeController['id'],
-           metaData: [
-             WooOrderPayloadMetaData(
-               key: '_stripe_client_secret',
-             ),          
-    ],
+  
         ),
       );
       isLoading.value = false;
@@ -164,41 +160,7 @@ class CheckoutController extends GetxController {
   }
 
 // ignore: unused_element
-Future<void> _startStripePayment(WooOrder orderResponse) async {
-  try {
-    // Assuming WooOrder has an `id` property
-    final orderId = orderResponse.id;
 
-    // Simulate creating a Stripe Checkout Session (or call your backend to create it)
-  //  final sessionId = await createStripeCheckoutSession(orderResponse);
-  print("Order Id: $orderId");
-     final sessionId =  await _fetchClientSecret(orderId!.toInt());
-
-    await Stripe.instance.initPaymentSheet(
-      paymentSheetParameters: SetupPaymentSheetParameters(
-        paymentIntentClientSecret: sessionId, // Use your real client secret
-        merchantDisplayName: 'Your Merchant Name',
-      ),
-    );
-
-    await Stripe.instance.presentPaymentSheet();
-
-    // Check payment status
-    final paymentIntentStatus = await Stripe.instance.retrievePaymentIntent(sessionId!);
-
-    if (paymentIntentStatus.status == 'succeeded') {
-      // Payment successful
-      print('Payment successful');
-    } else {
-      // Payment failed
-      print('Payment failed');
-    }
-
-    print('Redirected to Stripe Checkout');
-  } catch (e) {
-    print('Error during Stripe payment: $e');
-  }
-}
 
   // Fetch the Payment Intent client_secret from WooCommerce
   Future<String?> _fetchClientSecret(int orderId) async {

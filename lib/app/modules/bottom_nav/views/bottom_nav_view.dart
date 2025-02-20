@@ -5,7 +5,6 @@ import 'package:blackford/app/modules/home/views/home_view.dart';
 import 'package:blackford/app/modules/search_product/views/search_product_view.dart';
 import 'package:blackford/utilities/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class BottomNavView extends GetView<BottomNavController> {

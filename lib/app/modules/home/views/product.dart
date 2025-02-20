@@ -1,5 +1,6 @@
 import 'package:blackford/app/modules/home/controllers/home_controller.dart';
 import 'package:blackford/utilities/colors.dart';
+import 'package:blackford/widgets/customBottomSheet.dart';
 import 'package:blackford/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,7 +37,19 @@ class Product extends GetView<HomeController> {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 20),               
                 child: GestureDetector(
-                   onTap: () => Get.toNamed("/single-product", arguments: product),
+                   onTap: () {
+                     productDetailsModal(
+                                      context: context,
+                                      imageUrl: product.images[0].src!,
+                                      productName: product.name!,
+                                      productDescription: product.description!,
+                                      authorName: "Bill Blackford",
+                                      authorDescription:
+                                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                                      price: "\$${product.price}",
+                                      id: product.id,
+                                    );
+                   },
                   child: SizedBox(
                     height: 120,
                     child: productCard(

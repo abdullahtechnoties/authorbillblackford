@@ -79,7 +79,7 @@ class CartView extends GetView<CartController> {
                                       ),
                                       SizedBox(height: 2),
                                       Text(
-                                        "author",
+                                        "Bill Blackford",
                                         style: TextStyle(
                                           color: AppColor.white,
                                           fontSize: 12,
