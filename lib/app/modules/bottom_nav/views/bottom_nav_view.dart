@@ -23,7 +23,7 @@ class BottomNavView extends GetView<BottomNavController> {
         data:
             MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
         child: Container(
-          color: Colors.red,
+          color: AppColor.darkskyblue,
           height: 60,
           child: Wrap(children: [
             BottomNavigationBar(
@@ -94,10 +94,6 @@ class BottomNavView extends GetView<BottomNavController> {
   Widget build(BuildContext context) {
     // final LandingPageController landingPageController =
     //     Get.put(LandingPageController(), permanent: false);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: AppColor.darkskyblue,
-        statusBarBrightness: Brightness.dark,
-        systemNavigationBarColor: AppColor.darkskyblue));
     return SafeArea(
       top: false,
       child: Scaffold(
